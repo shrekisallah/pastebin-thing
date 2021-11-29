@@ -16,12 +16,16 @@ def getrecent():
     thing = soup.find_all('a')
     soup = BeautifulSoup(str(thing), 'html.parser')
     for link in soup.find_all('a'):
-        print(link.get('href'))
-    print(thing)
+        links = link.get('href')
+        if len(links) == 9:
+            url = f'https://pastebin.com/raw{links}'
+            r = requests.get(url=url)
+            with open(f'pastes{links}.txt', 'w') as file:
+                file.write(r.text)
 
 
 def main():
-    print(getrecent())
+    getrecent()
 
 
 if __name__ == '__main__':
